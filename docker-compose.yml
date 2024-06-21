@@ -1,0 +1,36 @@
+services:
+  client:
+    build:
+      context: .
+      dockerfile: client.Dockerfile
+    environment:
+      - HOST=${HOST}
+      - PORT=${PORT}
+      - CA_FILE=${CA_FILE:-/usr/bin/certs-rsa/ca.crt}
+      - CERT_FILE=${CLIENT_CERT_FILE:-/usr/bin/certs-rsa/client.crt}
+      - KEY_FILE=${CLIENT_KEY_FILE:-/usr/bin/certs-rsa/client.key}
+    volumes:
+      - ./certs-ecc:/usr/bin/certs-ecc
+      - ./certs-rsa:/usr/bin/certs-rsa
+      - ./configs:/usr/bin/configs
+    depends_on:
+      - server
+    restart: no
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - HOST=${HOST}
+      - PORT=${PORT}
+      - CA_FILE=${CA_FILE:-/usr/bin/certs-rsa/ca.crt}
+      - CERT_FILE=${SERVER_CERT_FILE:-/usr/bin/certs-rsa/server.crt}
+      - KEY_FILE=${SERVER_KEY_FILE:-/usr/bin/certs-rsa/server.key}
+    volumes:
+      - ./certs-ecc:/usr/bin/certs-ecc
+      - ./certs-rsa:/usr/bin/certs-rsa
+      - ./configs:/usr/bin/configs
+    ports:
+      - 8443:8443
+    restart: unless-stopped

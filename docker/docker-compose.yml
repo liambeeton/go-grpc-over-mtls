@@ -1,0 +1,15 @@
+services:
+  protogen:
+    build:
+      context: "."
+      args:
+        PLATFORM: ${PLATFORM}
+        PROTOC_VERSION: ${PROTOC_VERSION}
+    working_dir: "/source"
+    volumes:
+      - "../pb:/source"
+    command: bash -c "
+      protoc *.proto --proto_path=.
+      --go_out=. --go_opt=module=github.com/liambeeton/go-grpc-over-mtls/pb
+      --go-grpc_out=. --go-grpc_opt=module=github.com/liambeeton/go-grpc-over-mtls/pb
+      "

@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package bank.service.v1;
+
+option go_package = "github.com/liambeeton/go-grpc-over-mtls/pb/message";
+
+message CreateAccountRequest {
+  string account_id = 1;
+}
+
+message CreateAccountResponse {
+  string account_id = 1;
+}
+
+message GetBalanceRequest {
+  string account_id = 1;
+}
+
+message GetBalanceResponse {
+  string account_id = 1;
+  double balance = 2;
+}
+
+message DepositRequest {
+  string account_id = 1;
+  double amount = 2;
+}
+
+message DepositResponse {
+  double new_balance = 1;
+}
+
+message WithdrawRequest {
+  string account_id = 1;
+  double amount = 2;
+}
+
+message WithdrawResponse {
+  double new_balance = 1;
+}

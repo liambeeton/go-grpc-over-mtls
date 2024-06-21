@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package bank.service.v1;
+
+option go_package = "github.com/liambeeton/go-grpc-over-mtls/pb/service";
+
+import "message.proto";
+
+service BankService {
+  rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse);
+  rpc GetBalance(GetBalanceRequest) returns (GetBalanceResponse);
+  rpc Deposit(DepositRequest) returns (DepositResponse);
+  rpc Withdraw(WithdrawRequest) returns (WithdrawResponse);
+}
